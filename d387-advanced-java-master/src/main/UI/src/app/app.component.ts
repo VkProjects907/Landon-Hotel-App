@@ -3,7 +3,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {HttpClient, HttpResponse,HttpHeaders} from "@angular/common/http";
 import { Observable } from 'rxjs';
 import {map} from "rxjs/operators";
-
+import { environment } from '../environments/environment';
 
 
 
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit{
 
   constructor(private httpClient:HttpClient){}
 
-  private baseURL:string='http://localhost:8080';
+  private baseURL:string= environment.apiUrl;
 
   private getUrl:string = this.baseURL + '/room/reservation/v1/';
   private postUrl:string = this.baseURL + '/room/reservation/v1';
@@ -84,8 +84,12 @@ export class AppComponent implements OnInit{
       );
     }
     reserveRoom(value:string){
+      console.log('RESERVE BUTTON CLICKED');
+      console.log('Room ID:', value);
+      console.log('Check-in:', this.currentCheckInVal);
+      console.log('Check-out:', this.currentCheckOutVal);
       this.request = new ReserveRoomRequest(value, this.currentCheckInVal, this.currentCheckOutVal);
-
+      console.log('Reservation payload:', this.request);
       this.createReservation(this.request);
     }
     // createReservation(body:ReserveRoomRequest) {
@@ -108,11 +112,12 @@ export class AppComponent implements OnInit{
     this.reservationSuccess = false;
     this.reservationError = false;
     this.reservationMessage = '';
-
+    console.log('POST REQUEST STARTING:', this.postUrl, body);
     this.httpClient.post(this.postUrl, body)
       .subscribe({
         next: (res) => {
           console.log('Reservation created:', res);
+
 
           this.reservationSuccess = true;
           this.reservationMessage =
