@@ -6,7 +6,7 @@ It's a hotel web application that allows users to reserve a room at the Landon H
 
 ## Demo
 
-Link: thelandonhotelresort.com
+Link: www.thelandonhotelresort.com
 
 
 ## Run Locally
